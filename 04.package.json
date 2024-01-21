@@ -1,0 +1,55 @@
+{
+    "name": "testcapx01",
+    "version": "1.0.0",
+    "description": "A simple CAP project.",
+    "repository": "<Add your repository here>",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap-cloud-sdk/http-client": "^3.10.0",
+        "@sap/cds": "^7",
+        "@sap/xsenv": "^4.2.0",
+        "@sap/xssec": "^3.6.1",
+        "express": "^4",
+        "passport": "^0.7.0",
+        "sqlite3": "^5.1.7"
+    },
+    "devDependencies": {
+        "@cap-js/sqlite": "^1",
+        "@sap/cds-dk": "^7",
+        "@sap/ux-specification": "^1.108.20",
+        "rimraf": "^3.0.2"
+    },
+    "scripts": {
+        "start": "cds-serve",
+        "watch-risks": "cds watch --open risks/webapp/index.html?sap-ui-xx-viewCache=false",
+        "undeploy": "cf undeploy testcapx01 --delete-services --delete-service-keys --delete-service-brokers",
+        "build": "rimraf resources mta_archives && mbt build --mtar archive",
+        "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
+    },
+    "cds": {
+        "requires": {
+            "db": {
+                "kind": "sqlite",
+                "credentials": {
+                    "database": ":memory:"
+                }
+            },
+            "NorthWind": {
+                "kind": "odata",
+                "model": "srv/external/NorthWind",
+                "[backend]": {
+                    "credentials": {
+                        "url": "https://services.odata.org/Experimental/OData/OData.svc"
+                    }
+                }
+            }
+        },
+        "features": {
+            "in_memory_db": true
+        }
+    },
+    "sapux": [
+        "app/risks"
+    ]
+}

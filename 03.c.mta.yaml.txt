@@ -1,0 +1,73 @@
+_schema-version: "3.1"
+ID: testcapx01
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: testcapx01-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+    - name: uaa_testcapx01
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    builder: npm
+- name: testcapx01-approuter
+  type: approuter.nodejs
+  path: app/
+  requires:
+  - name: testcapx01_html_repo_runtime
+  - name: uaa_testcapx01
+  - name: testcapx01-destination-service
+  - name: srv-api
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: srv-api
+      url: ~{srv-url}  
+  parameters:
+    disk-quota: 1024M
+    memory: 1024M
+resources:
+- name: testcapx01-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: false
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: testcapx01-destination-service
+    service-plan: lite
+- name: testcapx01_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: uaa_testcapx01
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: testcapx01-xsuaa-service
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npx cds build --production

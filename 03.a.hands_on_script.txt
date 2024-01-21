@@ -1,0 +1,37 @@
+
+### ------------------------------------------------------------------------
+# Select data
+GET {{server}}/testservice/XTBL003(FLOWUUID=556ad01e-cb21-46bd-9ae6-18557e73bd10,FLOWCODE='MH001',STATUS='01')?$expand=DETAIL
+
+### ------------------------------------------------------------------------
+# Select data
+DELETE {{server}}/testservice/XTBL003(FLOWUUID=556ad01e-cb21-46bd-9ae6-18557e73bd10,FLOWCODE='MH001',STATUS='01')
+
+
+### ------------------------------------------------------------------------
+# Select data
+GET {{server}}/testservice/XTBL004
+
+### ------------------------------------------------------------------------
+# Create data
+POST {{server}}/testservice/XTBL003
+Content-Type: application/json;IEEE754Compatible=true
+
+{ 
+"FLOWCODE": "MH001",
+"STATUS": "01",
+"FIELD01": "07199782",
+"FIELD02": "K0121120",
+"DETAIL": [
+  {
+  "FLOWCODE": "MH001", 
+  "NO1": "2",
+  "STATUS": "01", 
+  "APPROVAL_NAME": "JHAN"
+  },{
+  "FLOWCODE": "MH001", 
+  "NO1": "3",
+  "STATUS": "01", 
+  "APPROVAL_NAME": "JHAN"
+  }] 
+}
