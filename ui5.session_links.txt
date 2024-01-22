@@ -1,0 +1,17 @@
+<<<<<==========>>>>>
+Fiori Freestyle > UI5  development
+   https://developers.sap.com/group.cp-frontend-ui5-1.html 
+   Work Zone에 배포하는 부분은 아래 링크 참조
+   https://developers.sap.com/tutorials/sapui5-fiori-cf-deploy.html
+Fiori Freestyle > UI5 Web Components 기반 React 개발 
+  https://developers.sap.com/mission.react-spa.html
+Fiori Freestyle > TechED Hands-on자료 
+  https://github.com/SAP-samples/teched2023-AD283v
+OpenSAP course. 
+  https://open.sap.com/courses/ui52
+
+<<<<<==========>>>>>
+Fiori element > Guided development
+  https://www.youtube.com/watch?v=my-9cnmQ0Tg
+  https://open.sap.com/courses/fiori-ea1/items/77KolvJCSGQG2bCjUQyoyc
+  https://developers.sap.com/group.fiori-tools-lrop.html
